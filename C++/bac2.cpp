@@ -1,42 +1,38 @@
 #include <bits/stdc++.h>
-
 using namespace std;
 
-void print(const vector<int> &arr) {
-  cout << "{";
-  bool first = true;
-  for (int elem : arr) {
-    if (!first) {
-      cout << ", ";
+vector<int> numeros;
+vector<bool> used(15,false);
+
+void print(){
+  cout<<"{";  
+  bool first=true;
+  for (int p:numeros){
+    if(!first) cout<<", ";
+      cout <<  p ;
+  first=false;
     }
-    cout << elem;
-    first = false;
-  }
-  cout << "}\n";
-}
+    cout <<"}\n";
+} 
 
-// variables globales
-vector<int> subset;
-int n;
-
-void backtrack() {
-  print(subset);
-  int ax = 0;
-  if (!subset.empty()) {
-    ax = subset.back();
-  }
-  for (int ay = ax + 1; ay <= n; ay++) {
-    // add ay
-    subset.push_back(ay);
-    backtrack();
-    // delete ay
-    subset.pop_back();
-  }
+void bactra(int n){
+    if((int)numeros.size() == n) return;
+    for(int p=1;p<=n;p++){
+        if (!used[p]) {
+            numeros.push_back(p);
+            used[p]=true;
+            print();
+            bactra(n);
+            used[p]=false;
+            numeros.pop_back();
+            
+        }    
+    }
+    
 }
 
 int main() {
-  n = 3;
-  backtrack();
+    int n = 5; 
+bactra(n);
+    return 0;
 }
-
-
